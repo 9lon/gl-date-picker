@@ -303,9 +303,11 @@ If you want to replace the default input field with a custom implementation, you
         console.log(e.target.value);
         if(e.target.value){
           this.customStyle['--gl-date-bgColor'] = 'green';
+          this.customStyle['--paper-input-container-color'] =  "green";
         }
         else {
            this.customStyle['--gl-date-bgColor'] = 'red';
+           this.customStyle['--paper-input-container-color'] =  "red";
         }
          this.updateStyles();
       },
