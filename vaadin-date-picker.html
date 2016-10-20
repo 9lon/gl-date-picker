@@ -312,7 +312,7 @@ If you want to replace the default input field with a custom implementation, you
         return this.inputElement.bindValue;
       },
       Onblur: function(e){
-        console.log(e.target.value);
+        //console.log(e.target.value);
         if(e.target.value){
           this.customStyle['--gl-date-bgColor'] = 'green';
           this.customStyle['--paper-input-container-color'] =  "green";
