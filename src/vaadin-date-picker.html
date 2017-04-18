@@ -65,28 +65,28 @@ If you want to replace the default input field with a custom implementation, you
 <dom-module id="vaadin-date-picker">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
       }
-
+      
       #overlay {
         height: 100vh;
         width: 420px;
       }
-
+      
       #inputcontainer {
         padding-bottom: 0;
       }
-
+      
       #inputcontainer,
       #inputcontainer input {
         cursor: pointer;
       }
-
+      
       #inputcontainer:focus {
         outline: none;
       }
-
+      
       paper-input-container div[suffix] {
         position: absolute;
         right: -4px;
@@ -96,7 +96,7 @@ If you want to replace the default input field with a custom implementation, you
         padding: 4px;
         text-align: center;
       }
-
+      
       paper-input-container iron-icon {
         fill: rgba(0, 0, 0, .26);
         cursor: pointer;
@@ -105,112 +105,97 @@ If you want to replace the default input field with a custom implementation, you
         margin-top: -1px;
         transition: fill 0.2s;
       }
-
+      
       paper-input-container paper-ripple {
         color: rgba(0, 0, 0, .54);
       }
-
-      :host([opened]) paper-input-container {
+      
+       :host([opened]) paper-input-container {
         --paper-input-container-underline-focus: {
           -webkit-transform: none;
           transform: none;
         }
       }
-
+      
       paper-input-container iron-icon:hover,
-      :host([opened]) paper-input-container iron-icon {
+       :host([opened]) paper-input-container iron-icon {
         fill: rgba(0, 0, 0, .54);
       }
-
-      :host([opened]) paper-input-container iron-icon:hover {
+      
+       :host([opened]) paper-input-container iron-icon:hover {
         fill: rgba(0, 0, 0, .86);
       }
-
+      
       #input {
         pointer-events: none;
       }
-
+      
       #clear {
         right: 28px;
       }
-
+      
       #clear iron-icon {
         @apply(--vaadin-date-picker-clear-icon);
       }
-
+      
       #calendar iron-icon {
         @apply(--vaadin-date-picker-calendar-icon);
       }
-
-      :host([disabled]) #calendar,
-      :host([readonly]) #calendar,
-      :host(:not([opened])) #clear,
-      :host(:not([has-value])) #clear,
-      :host([readonly]) #clear,
-      :host([disabled]) #clear {
+      
+       :host([disabled]) #calendar,
+       :host([readonly]) #calendar,
+       :host(:not([opened])) #clear,
+       :host(:not([has-value])) #clear,
+       :host([readonly]) #clear,
+       :host([disabled]) #clear {
         display: none;
       }
-
+      
       #input {
         box-sizing: border-box;
         padding-right: 28px;
       }
-
-      :host([opened][has-value]) #input {
+      
+       :host([opened][has-value]) #input {
         padding-right: 60px;
         margin-right: -32px;
       }
       /* edit */
-
+      
       paper-input-container {
-        --paper-input-container-disabled:{
-              opacity: 1;
+        --paper-input-container-disabled: {
+          opacity: 1;
         }
-        --paper-input-container-underline:{
+        --paper-input-container-underline: {
           border-bottom: var(--paper-input-border-success);
         }
-        --paper-input-container-underline-disabled:{
-              display: none;
+        --paper-input-container-underline-disabled: {
+          display: none;
         }
-        --paper-input-container-label:{
-          font-size:var(--gl-fontsize-label);
+        --paper-input-container-label-floating: {
           font-size: 20px;
-          font-family: 'rsuregular';
+        }
+        --paper-input-container-label: {
+          font-size: var(--gl-fontsize-label);
+          font-size: 18px;
+          font-family: 'CSChatThaiUI', sans-serif !important;
+          -webkit-font-smoothing: antialiased;
           font-weight: bold;
           color: var(--paper-input-label-color-success);
         }
-        --paper-input-container-input:{
+        --paper-input-container-input: {
           font-family: 'CSChatThaiUI', sans-serif !important;
           -webkit-font-smoothing: antialiased;
         }
       }
-      label{
-        font-family: 'rsuregular' !important;
-        font-weight: bold !important;
-        font-size: 22px !important;
-      }
     </style>
 
-    <paper-input-container id="inputcontainer"
-        auto-validate$="[[autoValidate]]"
-        tabindex$="[[_tabindex(disabled)]]"
-        invalid$="[[invalid]]"
-        disabled$="[[disabled]]">
+    <paper-input-container id="inputcontainer" auto-validate$="[[autoValidate]]" tabindex$="[[_tabindex(disabled)]]" invalid$="[[invalid]]"
+      disabled$="[[disabled]]">
       <label id="label">[[label]]</label>
-      <input id="input"
-          is="iron-input"
-          autocomplete="off"
-          tabindex="-1"
-          type="text"
-          on-focus="_focus"
-          name$="[[name]]"
-          invalid="{{invalid}}"
-          required$="[[required]]"
-          validator="[[validator]]"
-          readonly$="[[readonly]]"
-          disabled$="[[disabled]]" 
-          on-blur="Onblur"
-          on-focus="Onfocus"/>
+      <input id="input" is="iron-input" autocomplete="off" tabindex="-1" type="text" on-focus="_focus" name$="[[name]]" invalid="{{invalid}}"
+        required$="[[required]]" validator="[[validator]]" readonly$="[[readonly]]" disabled$="[[disabled]]" on-blur="Onblur"
+        on-focus="Onfocus" />
       <div suffix id="clear" on-tap="_clear">
         <iron-icon icon="clear"></iron-icon>
         <paper-ripple class="circle" center></paper-ripple>
@@ -221,31 +206,15 @@ If you want to replace the default input field with a custom implementation, you
       </div>
     </paper-input-container>
 
-    <iron-dropdown
-        id="dropdown"
-        fullscreen$=[[_fullscreen]]
-        allow-outside-scroll
-        on-iron-overlay-opened="_onOverlayOpened"
-        on-iron-overlay-closed="_onOverlayClosed"
-        on-iron-overlay-canceled="_preventCancelOnComponentAccess"
-        opened="{{opened}}">
-      <vaadin-date-picker-overlay
-          id="overlay" i18n="[[i18n]]"
-          fullscreen$=[[_fullscreen]]
-          label=[[label]]
-          on-date-tap="close"
-          selected-date="{{_selectedDate}}"
-          class="dropdown-content"
-          on-close="close"
-          focused-date="[[focusedDate]]"
-          tabindex="-1"
-          on-blur="Onblur">
+    <iron-dropdown id="dropdown" fullscreen$=[[_fullscreen]] allow-outside-scroll on-iron-overlay-opened="_onOverlayOpened" on-iron-overlay-closed="_onOverlayClosed"
+      on-iron-overlay-canceled="_preventCancelOnComponentAccess" opened="{{opened}}">
+      <vaadin-date-picker-overlay id="overlay" i18n="[[i18n]]" fullscreen$=[[_fullscreen]] label=[[label]] on-date-tap="close"
+        selected-date="{{_selectedDate}}" class="dropdown-content" on-close="close" focused-date="[[focusedDate]]" tabindex="-1"
+        on-blur="Onblur">
       </vaadin-date-picker-overlay>
     </iron-dropdown>
 
-    <iron-media-query
-        query="[[_fullscreenMediaQuery]]"
-        query-matches="{{_fullscreen}}">
+    <iron-media-query query="[[_fullscreenMediaQuery]]" query-matches="{{_fullscreen}}">
     </iron-media-query>
   </template>
 
@@ -291,26 +260,26 @@ If you want to replace the default input field with a custom implementation, you
        * Override the IronValidatableBehavior._getValidity implementation, replacing
        * it with the iron-input validation.
        */
-      _getValidity: function() {
+      _getValidity: function () {
         return this.inputElement.validate();
       },
 
-      _clear: function(e) {
+      _clear: function (e) {
         e.stopPropagation();
         this.value = '';
         this.close();
       },
 
-      _toggle: function(e) {
+      _toggle: function (e) {
         e.stopPropagation();
         this[this.$.dropdown.opened ? 'close' : 'open']();
       },
 
-      _tabindex: function(disabled) {
+      _tabindex: function (disabled) {
         return disabled ? -1 : 0;
       },
 
-      _input: function() {
+      _input: function () {
         return this.$.input;
       },
 
@@ -321,25 +290,25 @@ If you want to replace the default input field with a custom implementation, you
       get _inputValue() {
         return this.inputElement.bindValue;
       },
-      Onblur: function(e){
+      Onblur: function (e) {
         //console.log(e.target.value);
-        if(e.target.value){
-          this.customStyle['--paper-input-border-success'] =  "1px solid green";
+        if (e.target.value) {
+          this.customStyle['--paper-input-border-success'] = "1px solid green";
           this.customStyle['--paper-input-label-color-success'] = "green";
         }
         else {
-          this.customStyle['--paper-input-border-success'] =  "1px solid red";
+          this.customStyle['--paper-input-border-success'] = "1px solid red";
           this.customStyle['--paper-input-label-color-success'] = "red";
         }
-         this.updateStyles();
+        this.updateStyles();
       },
-      Onfocus:function(){
-        this.customStyle['--paper-input-container-color'] =  "#737373";
+      Onfocus: function () {
+        this.customStyle['--paper-input-container-color'] = "#737373";
       },
-      reset:function(){
-        this.customStyle['--paper-input-border-success'] =  "1px solid #737373";
+      reset: function () {
+        this.customStyle['--paper-input-border-success'] = "1px solid #737373";
         this.customStyle['--paper-input-label-color-success'] = "#737373";
-        this.customStyle['--paper-input-container-color'] =  "#737373";
+        this.customStyle['--paper-input-container-color'] = "#737373";
         this.updateStyles();
       }
     });
