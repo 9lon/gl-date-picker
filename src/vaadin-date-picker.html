@@ -165,15 +165,19 @@ If you want to replace the default input field with a custom implementation, you
       paper-input-container {
         --paper-input-container-disabled: {
           opacity: 1;
+          @apply(--vaadin-date-picker-container-disabled);
         }
         --paper-input-container-underline: {
           border-bottom: var(--paper-input-border-success);
+          @apply(--vaadin-date-picker-container-underline);
         }
         --paper-input-container-underline-disabled: {
           display: none;
+          @apply(--vaadin-date-picker-container-underline-disabled);
         }
         --paper-input-container-label-floating: {
-          font-size: 20px;
+          font-size: 18px;
+           @apply(--vaadin-date-picker-label-floating);
         }
         --paper-input-container-label: {
           font-size: var(--gl-fontsize-label);
@@ -182,10 +186,12 @@ If you want to replace the default input field with a custom implementation, you
           -webkit-font-smoothing: antialiased;
           font-weight: bold;
           color: var(--paper-input-label-color-success);
+          @apply(--vaadin-date-picker-container-label);
         }
         --paper-input-container-input: {
           font-family: 'CSChatThaiUI', sans-serif !important;
           -webkit-font-smoothing: antialiased;
+          @apply(--vaadin-date-picker-container-input);
         }
       }
     </style>
