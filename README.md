@@ -17,3 +17,23 @@ Using bower:
 ```bash
 $ bower install glon-gl-date-picker
 ```
+```bash
+  --paper-input-container-disabled: {
+          @apply(--vaadin-date-picker-container-disabled);
+        }
+        --paper-input-container-underline: {
+          @apply(--vaadin-date-picker-container-underline);
+        }
+        --paper-input-container-underline-disabled: {
+          @apply(--vaadin-date-picker-container-underline-disabled);
+        }
+        --paper-input-container-label-floating: {
+           @apply(--vaadin-date-picker-label-floating);
+        }
+        --paper-input-container-label: {
+          @apply(--vaadin-date-picker-container-label);
+        }
+        --paper-input-container-input: {
+          @apply(--vaadin-date-picker-container-input);
+        }
+```
